@@ -4,6 +4,7 @@ import ManageExpenses from '../../screens/ManageExpensesScreen';
 import { GlobalStyles } from '../../constants/styles';
 import ExpensesTabs from './expensesTabs';
 import Account from '../../screens/UserScreens/Account';
+import { CameraP } from '../../components/ui/ImagePicker';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,5 +16,6 @@ export default function AuthenticatedStack() {
 		<Stack.Screen name='TabNavigator' component={ExpensesTabs} options={{ headerShown: false }} />
 		<Stack.Screen  name='ManageExpenses' component={ManageExpenses} presentation='modal' />
 		<Stack.Screen  name='Account' component={Account} presentation='modal' />
+		<Stack.Screen name='Camera' component={CameraP} options={{ headerShown: false }} />
 	</Stack.Navigator>
 }

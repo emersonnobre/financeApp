@@ -104,7 +104,7 @@ export default function ExpensesProvider({ children }) {
 		}
 	}
 
-    const [expenses, dispatch] = useReducer(expensesReducer, fake_expenses);
+    const [expenses, dispatch] = useReducer(expensesReducer, []);
 
     function addExpense(newExpense) {
         dispatch({ type: 'ADD', payload: newExpense });

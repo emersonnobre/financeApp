@@ -4,12 +4,14 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import { useState } from 'react';
 import { GlobalStyles } from '../../constants/styles';
+import ImagePicker from '../ui/ImagePicker';
 
 export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
     const [formData, setFormData] = useState({
         amount: { value: defaultValues ? defaultValues.amount.toString() : '', isValid: true },
         date: { value: defaultValues ? defaultValues.date.toISOString() : '', isValid: true },
         description: { value: defaultValues ? defaultValues.description : '', isValid: true },
+        expensePicture: { value: defaultValues ? defaultValues.expensePicture : null, isValid: true },
     });
 
     function onInputValueChange(inputKey, value) {
@@ -24,6 +26,7 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
             description: formData.description.value,
             date: new Date(formData.date.value),
             amount: +formData.amount.value,
+            expensePicture: formData.expensePicture.value,
         };
 
         const formIsValid = validateForm(expense);
@@ -40,6 +43,7 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
 
         if (!dataIsValid || !descriptionIsValid || !amoutIsValid) {
             setFormData(currentData => ({
+                ...currentData,
                 amount: { value: currentData.amount.value, isValid: amoutIsValid },
                 date: { value: currentData.date.value, isValid: dataIsValid },
                 description: { value: currentData.description.value, isValid: descriptionIsValid },
@@ -51,10 +55,17 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
         return true;
     }
 
+    function onPickImage(imageUri) {
+        setFormData(currentData => ({
+            ...currentData,
+            expensePicture: { value: imageUri, isValid: true, },
+        }));
+    }
+
     const formIsInvalid = Object.values(formData).some(value => !value.isValid);
 
     return (
-        <View style={styles.container}>
+        <View>
             <Input 
                 label='Description'
                 inputOptions={{
@@ -93,20 +104,19 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
                     There are some invalid answers here, please correct them to continue!
                 </Text>
             }
+            <ImagePicker onPickImage={onPickImage} imageUri={formData.expensePicture.value} />
             <View style={styles.buttonsContainer}>
-                <Button style={styles.button} onPress={onCancel} mode='flat'>Cancel</Button>
-                <Button style={styles.button} onPress={submitFormDataHandler}>{defaultValues ? 'Edit' : 'Add'}</Button>
+                <Button style={{ button: styles.button }} onPress={onCancel} mode='flat'>Cancel</Button>
+                <Button style={{ button: styles.button }} onPress={submitFormDataHandler}>{defaultValues ? 'Edit' : 'Add'}</Button>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {},
     rowFlex: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
     },
     inputRowFlex: {
         flex: 1,
