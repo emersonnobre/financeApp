@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	date: {
-		color: '#ccc',
+		color: GlobalStyles.colors.grey500,
 		fontWeight: 500,
 	},
 	amountContainer: {
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	amount: {
-		color: 'white',
+		color: GlobalStyles.colors.accent100,
 	},
 });

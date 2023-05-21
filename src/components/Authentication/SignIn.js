@@ -67,7 +67,7 @@ export default function SignIn({ onAuthenticationSuccess }) {
                 />
             </View>
             <TextLink style={styles.forgotPasswordContainer} textStyle={styles.forgotPasswordText}>Forgot your password?</TextLink>
-            <Button color='#e91' onPress={submitFormDataHandler}>Login</Button>
+            <Button onPress={submitFormDataHandler}>Login</Button>
             <Divisor>Or login with</Divisor>
             <AlternativesAuthentication />
         </View>
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
     },
     forgotPasswordContainer: { alignItems: 'flex-end', marginBottom: 20 },
     forgotPasswordText: { 
-        color: '#e91',
+        color: GlobalStyles.colors.accent300,
     },
 });

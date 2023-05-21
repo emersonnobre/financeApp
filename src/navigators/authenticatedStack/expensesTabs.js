@@ -12,16 +12,22 @@ const Tab = createBottomTabNavigator();
 export default function ExpensesTabs() {
 	return <Tab.Navigator screenOptions={({ navigation }) => ({
 		headerStyle: { backgroundColor: GlobalStyles.colors.primary700 },
-		headerTintColor: GlobalStyles.colors.primary50,
+		headerTintColor: GlobalStyles.colors.grey100,
 		tabBarStyle: { backgroundColor: GlobalStyles.colors.primary700 },
-		tabBarActiveTintColor: GlobalStyles.colors.accent500, 
+		tabBarActiveTintColor: GlobalStyles.colors.accent300, 
 		tabBarInactiveTintColor: '#ccc7',
 		headerTitleAlign: 'center',
 		headerRight: ({ tintColor }) => <IconButton 
 			onPress={() => navigation.navigate('ManageExpenses')} 
 			icon='add'
 			size={24} 
+			color={tintColor}
+		/>,
+		headerLeft: ({ tintColor }) => <IconButton 
+			onPress={() => navigation.navigate('Account')}
+			icon='person-circle-outline' 
 			color={tintColor} 
+			size={24} 
 		/>,
 	})}>
 		<Tab.Screen 
@@ -40,15 +46,6 @@ export default function ExpensesTabs() {
 				title: 'All Expenses',
 				tabBarLabel: 'All',
 				tabBarIcon: ({ color, size }) => <Icon name='list' color={color} size={size} />
-			}}
-		/>
-		<Tab.Screen 
-			name='UserStack' 
-			component={UserStack}
-			options={{
-				headerShown: false,
-				tabBarLabel: 'Account',
-				tabBarIcon: ({ color, size }) => <Icon name='person-circle-outline' color={color} size={size} />
 			}}
 		/>
 	</Tab.Navigator>

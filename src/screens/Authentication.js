@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
     },
     textSubtitleContainer: {
-        color: '#eea',
+        color: GlobalStyles.colors.accent100,
         fontSize: 18,
     },
 });

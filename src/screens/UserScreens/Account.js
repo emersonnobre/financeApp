@@ -1,10 +1,11 @@
 import { useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, } from 'react-native';
 
 import { AuthContext } from '../../store/auth.context';
 import Button from '../../components/ui/Button';
 import { GlobalStyles } from '../../constants/styles';
 import ListWithActions from '../../components/ui/ListWithActions';
+import UserInformation from '../../components/User/UserInformation';
 
 const accountOptions = [
     { label: 'Privacy', iconName: 'lock-closed-outline', action: () => {} },
@@ -16,29 +17,30 @@ const accountOptions = [
 ];
 
 export default function Account() {
-    const { authenticatedUser } = useContext(AuthContext);
+    const { authenticatedUser, logout } = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
             <View style={styles.overviewContainer}>
-
+                <UserInformation />
             </View>
             <View style={styles.accountOptionsContainer}>
                 <ListWithActions 
                     actions={accountOptions} 
-                    iconStyle={{ size: 20, color: GlobalStyles.colors.primary600 }} 
-                    labelStyle={{ fontSize: 15, color: GlobalStyles.colors.primary600 }} 
+                    iconStyle={{ size: 20, color: GlobalStyles.colors.grey700 }}
+                    labelStyle={{ fontSize: 15, color: GlobalStyles.colors.grey700 }} 
                 />
             </View>
             <View style={styles.logoutContainer}>
                 <Button 
                     style={{ 
                         button: styles.logoutButtonContainer, 
-                        text: styles.logoutButtonText ,
+                        text: styles.logoutButtonText,
                         buttonPressed: styles.logoutButtonPressed
                     }} 
                     iconName='log-in-outline'
                     iconOptions={{ size: 20, color: 'tomato' }}
+                    onPress={logout}
                 >
                     Log out
                 </Button>
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     },
     overviewContainer: {
         flex: 2,
-        backgroundColor: 'red'
     },
     accountOptionsContainer: {
         flex: 2,
