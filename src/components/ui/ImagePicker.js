@@ -32,6 +32,11 @@ export default function ImagePicker({ imageUri, onPickImage }) {
             });
     }
 
+    function clearPictureHandler() {
+        onPickImage && onPickImage(null);
+        setImage(null);
+    }
+
     function onTakePicture(imageUri) {
         onPickImage && onPickImage(imageUri);
 
@@ -47,7 +52,24 @@ export default function ImagePicker({ imageUri, onPickImage }) {
     return (
         <View style={styles.imagePickerContainer}>
             {image && <Image source={{ uri: 'data:image/png;base64,' + image  }} style={styles.image} />}
-            <Button onPress={takePictureHandler} style={{ button: styles.takePictureButton, text: styles.takePictureButtonText }}>Take Picture</Button>
+            {!image && <Button 
+                onPress={takePictureHandler} 
+                style={{ 
+                    button: [styles.takePictureButton, styles.noImagePicked], 
+                    text: styles.takePictureButtonText 
+                }}
+            >
+                Take Picture
+            </Button>}
+            {image && <Button 
+                onPress={clearPictureHandler} 
+                style={{ 
+                    button: [styles.takePictureButton, styles.clearPictureButton], 
+                    text: [styles.takePictureButtonText, styles.clearPictureButtonText]
+                }}
+            >
+                Clear Picture
+            </Button>}
         </View>
     );
 }
@@ -113,6 +135,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: GlobalStyles.colors.primary600,
+    },
+    clearPictureButton: {
+        borderColor: GlobalStyles.colors.red300,
+    },
+    clearPictureButtonText: {
+        color: GlobalStyles.colors.red300,
+    },
+    noImagePicked: {
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
+        height: 40,
     },
     takePictureButtonText: { 
         color: GlobalStyles.colors.primary600,

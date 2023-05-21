@@ -13,6 +13,7 @@ export const GlobalStyles = {
 		accent100: '#eea',
 		accent300: '#e91',
 		accent500: '#ffc300',
+		red300: 'tomato',
 		red500: '#e5383b',
 	},
 }
