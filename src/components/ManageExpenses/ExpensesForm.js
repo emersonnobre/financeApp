@@ -1,18 +1,33 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Input from '../ui/Input';
-import Button from '../ui/Button';
-import { useState } from 'react';
 import { GlobalStyles } from '../../constants/styles';
 import ImagePicker from '../ui/ImagePicker';
+import IconButton from '../ui/IconButton';
+import Map from '../ui/Map';
+import CustomDatePicker from '../ui/DatePicker';
 
-export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
+export default function ExpensesForm({ onSubmit, defaultValues, }) {
+    const navigation = useNavigation();
     const [formData, setFormData] = useState({
         amount: { value: defaultValues ? defaultValues.amount.toString() : '', isValid: true },
-        date: { value: defaultValues ? defaultValues.date.toISOString() : '', isValid: true },
+        date: { value: defaultValues ? defaultValues.date : '', isValid: true },
         description: { value: defaultValues ? defaultValues.description : '', isValid: true },
         expensePicture: { value: defaultValues ? defaultValues.expensePicture : null, isValid: true },
     });
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: ({ tintColor }) => <IconButton 
+				onPress={submitFormDataHandler} 
+				icon='save'
+				size={24} 
+				color={tintColor}
+			/>
+        });
+    }, [navigation, submitFormDataHandler])
 
     function onInputValueChange(inputKey, value) {
         setFormData(currentData => ({
@@ -21,10 +36,17 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
         }));
     }
 
+    function onChangeDate(date) {
+        setFormData(currentData => ({
+            ...currentData,
+            date: { value: date, isValid: true },
+        }));
+    }
+
     function submitFormDataHandler() {
         const expense = {
             description: formData.description.value,
-            date: new Date(formData.date.value),
+            date: formData.date.value,
             amount: +formData.amount.value,
             expensePicture: formData.expensePicture.value,
         };
@@ -69,7 +91,7 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
             <Input 
                 label='Description'
                 inputOptions={{
-                    maxLength: 50,
+                    maxLength: 500,
                     multiline: true,
                     onChangeText: onInputValueChange.bind(this, 'description'),
                     value: formData.description.value
@@ -77,38 +99,25 @@ export default function ExpensesForm({ onSubmit, onCancel, defaultValues, }) {
                 invalid={!formData.description.isValid}
             />
             <View style={styles.rowFlex}>
-                <Input 
-                    label='Date'
-                    style={styles.inputRowFlex}
-                    inputOptions={{
-                        maxLength: 10,
-                        placeholder: 'YYYY-MM-dd',
-                        onChangeText: onInputValueChange.bind(this, 'date'),
-                        value: formData.date.value
-                    }}
-                    invalid={!formData.date.isValid}
-                />
                 <Input
                     label='Amount (R$)'
                     style={styles.inputRowFlex}
                     inputOptions={{
+                        maxLength: 8,
                         keyboardType: 'decimal-pad',
                         onChangeText: onInputValueChange.bind(this, 'amount'),
-                        value: formData.amount.value
+                        value: formData.amount.value,
                     }}
                     invalid={!formData.amount.isValid}
                 />
+                <CustomDatePicker 
+                    label='Date' 
+                    style={styles.inputRowFlex} 
+                    initialValue={formData.date.value != '' ? formData.date.value : null}
+                    onConfirm={onChangeDate} 
+                />
             </View>
-            {formIsInvalid && 
-                <Text style={styles.errorMessage}>
-                    There are some invalid answers here, please correct them to continue!
-                </Text>
-            }
             <ImagePicker onPickImage={onPickImage} imageUri={formData.expensePicture.value} />
-            <View style={styles.buttonsContainer}>
-                <Button style={{ button: styles.button }} onPress={onCancel} mode='flat'>Cancel</Button>
-                <Button style={{ button: styles.button }} onPress={submitFormDataHandler}>{defaultValues ? 'Edit' : 'Add'}</Button>
-            </View>
         </View>
     );
 }
@@ -120,18 +129,8 @@ const styles = StyleSheet.create({
     },
     inputRowFlex: {
         flex: 1,
-        marginHorizontal: 4,
+        marginHorizontal: 4
     },
-    buttonsContainer: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginTop: 16,
-	},
-	button: {
-		minWidth: 120,
-		marginHorizontal: 6,
-	},
     errorMessage: {
         color: GlobalStyles.colors.red500,
     },

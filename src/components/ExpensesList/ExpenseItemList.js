@@ -12,7 +12,7 @@ export default function ExpenseItemList({ id, description, amount, date }) {
 	}
 
 	return (
-		<Pressable onPress={manageExpenseHandler}>
+		<Pressable onPress={manageExpenseHandler} style={({ pressed }) => (pressed && styles.pressed)}>
 			<View style={styles.container}>
 				<View style={styles.descriptionContainer}>
 					<Text style={styles.description}>{description}</Text>
@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
 		marginVertical: 6,
 		elevation: 2,
 		borderRadius: 6,
+	},
+	pressed: {
+		opacity: .8
 	},
 	descriptionContainer: {
 		flex: 3,

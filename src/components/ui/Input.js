@@ -20,7 +20,7 @@ export default function Input({ label, inputOptions = {}, style = {}, invalid = 
                 onFocus={() => setFocus(true)} 
                 onBlur={() => setFocus(false)}
             />
-            { invalid && <Text style={styles.errorMessage}>{validationErrorMessage}</Text> }
+            { invalid && validationErrorMessage && <Text style={styles.errorMessage}>{validationErrorMessage}</Text> }
         </View>
     );
 }

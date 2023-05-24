@@ -16,7 +16,7 @@ export default function ManageExpensesScreen({ route, navigation }) {
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
-			title: expenseEditedId ? 'Edit Expense' : 'Add Expense'
+			title: expenseEditedId ? 'Edit Expense' : 'Add Expense',
 		});
 	}, [navigation, expenseEditedId]);
 

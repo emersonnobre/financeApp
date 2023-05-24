@@ -101,7 +101,7 @@ export function CameraP({ route }) {
             />
             <View style={styles.icon}>
                 <View style={styles.innerContainerIcon}>
-                    <IconButton onPress={handlePicture} icon='camera-outline' size={40} color='white' />
+                    <IconButton onPress={handlePicture} icon='ellipse-outline' size={40} color='white' />
                 </View>
             </View>
         </View>
