@@ -13,7 +13,7 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
     const navigation = useNavigation();
     const [formData, setFormData] = useState({
         amount: { value: defaultValues ? defaultValues.amount.toString() : '', isValid: true },
-        date: { value: defaultValues ? defaultValues.date : '', isValid: true },
+        date: { value: defaultValues ? defaultValues.date : new Date(), isValid: true },
         description: { value: defaultValues ? defaultValues.description : '', isValid: true },
         expensePicture: { value: defaultValues ? defaultValues.expensePicture : null, isValid: true },
     });
@@ -84,10 +84,8 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
         }));
     }
 
-    const formIsInvalid = Object.values(formData).some(value => !value.isValid);
-
     return (
-        <View>
+        <View style={styles.container}>
             <Input 
                 label='Description'
                 inputOptions={{
@@ -101,7 +99,7 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
             <View style={styles.rowFlex}>
                 <Input
                     label='Amount (R$)'
-                    style={styles.inputRowFlex}
+                    style={[styles.inputRowFlex, { marginRight: 5, }]}
                     inputOptions={{
                         maxLength: 8,
                         keyboardType: 'decimal-pad',
@@ -112,24 +110,27 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
                 />
                 <CustomDatePicker 
                     label='Date' 
-                    style={styles.inputRowFlex} 
+                    style={[styles.inputRowFlex, { marginLeft: 5, }]} 
                     initialValue={formData.date.value != '' ? formData.date.value : null}
                     onConfirm={onChangeDate} 
                 />
             </View>
+            <Map />
             <ImagePicker onPickImage={onPickImage} imageUri={formData.expensePicture.value} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     rowFlex: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
     },
     inputRowFlex: {
         flex: 1,
-        marginHorizontal: 4
     },
     errorMessage: {
         color: GlobalStyles.colors.red500,
