@@ -1,5 +1,7 @@
+import { GOOGLE_MAPS_API_KEY } from '@env';
+
 export async function getAddressByCoordinates(lat, lng) {
-    const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${'AIzaSyAY5D1YT42zz742iriWTj_mZ0vYuMWV1KM'}`;
+    const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`;
     try {
         const response = await fetch(apiUrl);
         const jsonResponse = await response.json();
