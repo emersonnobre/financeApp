@@ -34,7 +34,7 @@ export default function ExpensesTabs() {
 			name='RecentExpenses' 
 			component={RecentExpenses}
 			options={{ 
-				title: 'Recent Expenses',
+				title: 'Recent expenses',
 				tabBarLabel: 'Recent',
 				tabBarIcon: ({ color, size }) => <Icon name='hourglass' color={color} size={size} />
 			}}
@@ -43,7 +43,7 @@ export default function ExpensesTabs() {
 			name='AllExpenses' 
 			component={AllExpenses}
 			options={{
-				title: 'All Expenses',
+				title: 'All expenses',
 				tabBarLabel: 'All',
 				tabBarIcon: ({ color, size }) => <Icon name='list' color={color} size={size} />
 			}}

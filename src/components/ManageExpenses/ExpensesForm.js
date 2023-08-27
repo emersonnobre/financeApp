@@ -16,6 +16,7 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
         date: { value: defaultValues ? defaultValues.date : new Date(), isValid: true },
         description: { value: defaultValues ? defaultValues.description : '', isValid: true },
         expensePicture: { value: defaultValues ? defaultValues.expensePicture : null, isValid: true },
+        location: defaultValues?.location ? { ...defaultValues.location } : null,
     });
 
     useEffect(() => {
@@ -49,6 +50,7 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
             date: formData.date.value,
             amount: +formData.amount.value,
             expensePicture: formData.expensePicture.value,
+            location: formData.location ? { ...formData.location } : null,
         };
 
         const formIsValid = validateForm(expense);
@@ -84,6 +86,13 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
         }));
     }
 
+    function onChangeLocation(latitude, longitude) {
+        setFormData(currentData => ({
+            ...currentData,
+            location: { latitude, longitude, }
+        }));
+    }
+
     return (
         <View style={styles.container}>
             <Input 
@@ -115,7 +124,7 @@ export default function ExpensesForm({ onSubmit, defaultValues, }) {
                     onConfirm={onChangeDate} 
                 />
             </View>
-            <Map />
+            <Map onSetLocation={onChangeLocation} initialLocation={formData.location} />
             <ImagePicker onPickImage={onPickImage} imageUri={formData.expensePicture.value} />
         </View>
     );
