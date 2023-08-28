@@ -1,13 +1,13 @@
 import { useContext, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-import SignIn from '../components/Authentication/SignIn';
-import Title from '../components/ui/Title';
-import TextLink from '../components/ui/TextLink';
-import SignUp from '../components/Authentication/SignUp';
+import SignIn from '../../components/Authentication/SignIn';
+import Title from '../../components/ui/Title';
+import TextLink from '../../components/ui/TextLink';
+import SignUp from '../../components/Authentication/SignUp';
 
-import { GlobalStyles } from '../constants/styles';
-import { AuthContext } from '../store/auth.context';
+import { GlobalStyles } from '../../constants/styles';
+import { AuthContext } from '../../store/auth.context';
 
 export default function Authentication() {
     const { authenticate: authenticateInContext } = useContext(AuthContext);

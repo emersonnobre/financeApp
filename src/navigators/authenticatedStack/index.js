@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ManageExpenses from '../../screens/ManageExpensesScreen';
 import { GlobalStyles } from '../../constants/styles';
 import ExpensesTabs from './expensesTabs';
-import Account from '../../screens/UserScreens/Account';
+import Account from '../../screens/User/Account';
 import { CameraP } from '../../components/ui/ImagePicker';
 
 const Stack = createNativeStackNavigator();

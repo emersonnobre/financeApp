@@ -26,9 +26,11 @@ function StackNavigator() {
 }
 
 function Pages() {
-	return <NavigationContainer>
-		<StackNavigator />
-	</NavigationContainer>
+	return (
+		<NavigationContainer>
+			<StackNavigator />
+		</NavigationContainer>
+	);
 }
 
 function ContextsWrapper({ children }) {
