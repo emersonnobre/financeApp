@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { View, processColor } from 'react-native';
 import { LineChart } from 'react-native-charts-wrapper';
 
-import { ExpensesContext } from '../store/expensens.context';
-import { GlobalStyles } from '../constants/styles';
-import { getFormattedDate } from '../util';
+import { ExpensesContext } from '../../store/expensens.context';
+import { GlobalStyles } from '../../constants/styles';
+import { getFormattedDate } from '../../util';
 import { Text } from 'react-native-svg';
 
 export default function Home() {

@@ -1,10 +1,10 @@
 import { View, StyleSheet, } from 'react-native';
 import { useContext, useLayoutEffect, } from 'react';
 
-import IconButton from '../components/ui/IconButton';
-import ExpensesForm from '../components/ManageExpenses/ExpensesForm';
-import { GlobalStyles } from '../constants/styles';
-import { ExpensesContext } from '../store/expensens.context';
+import IconButton from '../../components/ui/IconButton';
+import ExpensesForm from '../../components/ManageExpenses/ExpensesForm';
+import { GlobalStyles } from '../../constants/styles';
+import { ExpensesContext } from '../../store/expensens.context';
 
 export default function ManageExpensesScreen({ route, navigation }) {
 	const { addExpense, updateExpense, deleteExpense, expenses } = useContext(ExpensesContext);

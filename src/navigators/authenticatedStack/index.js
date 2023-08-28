@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ManageExpenses from '../../screens/ManageExpensesScreen';
+import ManageExpenses from '../../screens/Expenses/ManageExpensesScreen';
 import { GlobalStyles } from '../../constants/styles';
 import ExpensesTabs from './expensesTabs';
 import Account from '../../screens/User/Account';

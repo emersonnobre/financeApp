@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import AllExpenses from '../../screens/Expenses/AllExpenses';
-import RecentExpenses from '../../screens/RecentExpenses';
-import Home from '../../screens/Home';
+import RecentExpenses from '../../screens/Expenses/RecentExpenses';
+import Home from '../../screens/Expenses/Home';
 import { GlobalStyles } from '../../constants/styles';
 import IconButton from '../../components/ui/IconButton';
 
