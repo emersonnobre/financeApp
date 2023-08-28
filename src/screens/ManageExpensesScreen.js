@@ -3,16 +3,14 @@ import { useContext, useLayoutEffect, } from 'react';
 
 import IconButton from '../components/ui/IconButton';
 import ExpensesForm from '../components/ManageExpenses/ExpensesForm';
-
 import { GlobalStyles } from '../constants/styles';
-
 import { ExpensesContext } from '../store/expensens.context';
 
 export default function ManageExpensesScreen({ route, navigation }) {
 	const { addExpense, updateExpense, deleteExpense, expenses } = useContext(ExpensesContext);
 	const expenseEditedId = route.params?.expenseId;
 
-	const editedExpense = expenseEditedId ? expenses.find(expense => expense.id === expenseEditedId) : null;
+	const editedExpense = expenseEditedId ? expenses.find(expense => expense._id.toString() === expenseEditedId) : null;
 
 	useLayoutEffect(() => {
 		navigation.setOptions({

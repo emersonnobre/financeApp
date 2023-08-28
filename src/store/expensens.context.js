@@ -1,68 +1,9 @@
-import { useReducer, createContext, useEffect } from 'react';
-import { getAllExpenses } from '../services/api';
+import { createContext, useEffect, useState } from 'react';
+import Realm from 'realm';
 
-const fake_expenses = [
-	{
-		id: 'e1',
-		description: 'a pair of shoes',
-		amount: 29.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e2',
-		description: 'tv',
-		amount: 829.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e3',
-		description: 'some new text',
-		amount: 129.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e4',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e7',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e5',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e6',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e0',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e8',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-	{
-		id: 'e9',
-		description: 'a pair of troursers levis',
-		amount: 2912.90,
-		date: new Date('2023-01-01')
-	},
-];
+import { getAllExpenses } from '../services/api';
+import Expense from '../database/model/expense.model';
+import database from '../database/config';
 
 export const ExpensesContext = createContext({
     addExpense: (newExpense) => {},
@@ -71,26 +12,10 @@ export const ExpensesContext = createContext({
     expenses: [],
 });
 
-function expensesReducer(state, action) {
-    switch(action.type) {
-        case 'ADD':
-            const newExpense = { ...action.payload, id: state.length ? (state.length + 1).toString() : '0' };
-            return [...state, newExpense];
-		case 'SET':
-			return [...action.payload.map(item => ({...item, date: new Date(item.date)}))];
-        case 'UPDATE':
-            let expenses = [...state];
-            expenses = expenses.map(expense => expense.id === action.payload.id ? { ...expense, ...action.payload.expenseData } : expense);
-            return expenses;
-        case 'DELETE':
-            console.log('deleting', action.payload);
-            return [ ...state.filter(expense => expense.id !== action.payload) ];
-        default:
-            return [...state];
-    }
-}
-
 export default function ExpensesProvider({ children }) {
+	const databaseExpenses = database.useQuery(Expense);
+	const realm = database.useRealm();
+
 	useEffect(() => {
 		init();
 	}, []);
@@ -104,22 +29,40 @@ export default function ExpensesProvider({ children }) {
 		}
 	}
 
-    const [expenses, dispatch] = useReducer(expensesReducer, []);
+    const [expenses, setExpenses] = useState(databaseExpenses);
 
     function addExpense(newExpense) {
-        dispatch({ type: 'ADD', payload: newExpense });
+        const expense = {
+			_id: new Realm.BSON.ObjectId(),
+			description: newExpense.description,
+			date: newExpense.date,
+			amount: newExpense.amount,
+			expensePicture: newExpense.expensePicture,
+			latitude: newExpense.latitude,
+			longitude: newExpense.longitude,
+		};
+		realm.write(() => {
+			realm.create('Expense', expense);
+		});
     }
-
-	function setExpenses(expenses) {
-		dispatch({ type: 'SET', payload: expenses });
-	}
     
     function updateExpense(id, expenseData) {
-        dispatch({ type: 'UPDATE', payload: { id, expenseData } });
+        const expense = realm.objectForPrimaryKey(Expense, Realm.BSON.ObjectId(id));
+		realm.write(() => {
+			expense.description = expenseData.description;
+			expense.date = expenseData.date;
+			expense.amount = expenseData.amount;
+			expense.expensePicture = expenseData.expensePicture;
+			expense.latitude = expenseData.latitude;
+			expense.longitude = expenseData.longitude;
+		});
     }
     
     function deleteExpense(expenseId) {
-        dispatch({ type: 'DELETE', payload: expenseId });
+		const expense = realm.objectForPrimaryKey(Expense, Realm.BSON.ObjectId(expenseId));
+		realm.write(() => {
+			realm.delete(expense);
+		});
     }
     
     const exportedValues = {

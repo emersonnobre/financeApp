@@ -3,9 +3,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import AllExpenses from '../../screens/AllExpenses';
 import RecentExpenses from '../../screens/RecentExpenses';
+import Home from '../../screens/Home';
 import { GlobalStyles } from '../../constants/styles';
 import IconButton from '../../components/ui/IconButton';
-import UserStack from './userStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,12 +31,21 @@ export default function ExpensesTabs() {
 		/>,
 	})}>
 		<Tab.Screen 
+			name='Home'
+			component={Home}
+			options={{
+				title: 'Home',
+				tabBarLabel: 'Home',
+				tabBarIcon: ({ color, size }) => <Icon name='home-outline' color={color} size={size} />
+			}}
+		/>
+		<Tab.Screen 
 			name='RecentExpenses' 
 			component={RecentExpenses}
 			options={{ 
 				title: 'Recent expenses',
 				tabBarLabel: 'Recent',
-				tabBarIcon: ({ color, size }) => <Icon name='hourglass' color={color} size={size} />
+				tabBarIcon: ({ color, size }) => <Icon name='hourglass-outline' color={color} size={size} />
 			}}
 		/>
 		<Tab.Screen 
@@ -45,7 +54,7 @@ export default function ExpensesTabs() {
 			options={{
 				title: 'All expenses',
 				tabBarLabel: 'All',
-				tabBarIcon: ({ color, size }) => <Icon name='list' color={color} size={size} />
+				tabBarIcon: ({ color, size }) => <Icon name='list-outline' color={color} size={size} />
 			}}
 		/>
 	</Tab.Navigator>

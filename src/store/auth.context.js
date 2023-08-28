@@ -8,7 +8,7 @@ export const AuthContext = createContext({
 });
 
 export default function AuthProvider({ children }) {
-    const [authenticatedUser, setAuthenticatedUser] = useState(null);
+    const [authenticatedUser, setAuthenticatedUser] = useState(true);
 
     function authenticate(name, email, token) {
         setAuthenticatedUser({name, email, token});

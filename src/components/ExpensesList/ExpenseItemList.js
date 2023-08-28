@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { GlobalStyles } from '../../constants/styles';
 import { getFormattedDate } from '../../util';
 
-export default function ExpenseItemList({ id, description, amount, date }) {
+export default function ExpenseItemList({ _id, description, amount, date }) {
 	const navigation = useNavigation();
 
 	function manageExpenseHandler() {
-		navigation.navigate('ManageExpenses', { expenseId: id });
+		navigation.navigate('ManageExpenses', { expenseId: _id.toString() });
 	}
 
 	return (

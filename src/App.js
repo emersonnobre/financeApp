@@ -8,6 +8,7 @@ import { GlobalStyles } from './constants/styles';
 import AuthenticationStack from './navigators/authenticationStack';
 import AuthenticatedStack from './navigators/authenticatedStack';
 import AuthProvider, { AuthContext } from './store/auth.context';
+import Realm from './database/config';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,11 +33,13 @@ function Pages() {
 
 function ContextsWrapper({ children }) {
 	return (
-		<AuthProvider>
-			<ExpensesProvider>
-				{children}
-			</ExpensesProvider>
-		</AuthProvider>
+		<Realm.RealmProvider>
+			<AuthProvider>
+				<ExpensesProvider>
+					{children}
+				</ExpensesProvider>
+			</AuthProvider>
+		</Realm.RealmProvider>
 	);
 }
 
